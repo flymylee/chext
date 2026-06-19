@@ -2,7 +2,7 @@
 
 AI 채팅 추출 북마클릿 모음
 
-**설치 페이지:** https://flymylee.github.io/chext/
+**설치 페이지:** https://chext.sahayana.hk/
 
 ---
 
@@ -29,32 +29,32 @@ node/
 
 ### Google AI Mode — 대화 추출기 (풀버전)
 ```javascript
-javascript:(()=>{var s=document.createElement('script');s.src='https://flymylee.github.io/chext/google-ai/extractor-full.js?v='+Date.now();document.head.appendChild(s)})()
+javascript:(()=>{var s=document.createElement('script');s.src='https://chext.sahayana.hk/google-ai/extractor-full.js?v='+Date.now();document.head.appendChild(s)})()
 ```
 
 ### Google AI Mode — 대화 추출기 (압축)
 ```javascript
-javascript:(()=>{var s=document.createElement('script');s.src='https://flymylee.github.io/chext/google-ai/extractor-full-min.js?v='+Date.now();document.head.appendChild(s)})()
+javascript:(()=>{var s=document.createElement('script');s.src='https://chext.sahayana.hk/google-ai/extractor-full-min.js?v='+Date.now();document.head.appendChild(s)})()
 ```
 
 ### Google AI Mode — 대화 추출기 (경량)
 ```javascript
-javascript:(()=>{var s=document.createElement('script');s.src='https://flymylee.github.io/chext/google-ai/extractor-short.js?v='+Date.now();document.head.appendChild(s)})()
+javascript:(()=>{var s=document.createElement('script');s.src='https://chext.sahayana.hk/google-ai/extractor-short.js?v='+Date.now();document.head.appendChild(s)})()
 ```
 
 ### Google AI Mode — 턴 번호 삽입
 ```javascript
-javascript:(()=>{var s=document.createElement('script');s.src='https://flymylee.github.io/chext/google-ai/turn-tag.js?v='+Date.now();document.head.appendChild(s)})()
+javascript:(()=>{var s=document.createElement('script');s.src='https://chext.sahayana.hk/google-ai/turn-tag.js?v='+Date.now();document.head.appendChild(s)})()
 ```
 
 ### Google AI Mode — 턴 번호 삽입 (압축)
 ```javascript
-javascript:(()=>{var s=document.createElement('script');s.src='https://flymylee.github.io/chext/google-ai/turn-tag-min.js?v='+Date.now();document.head.appendChild(s)})()
+javascript:(()=>{var s=document.createElement('script');s.src='https://chext.sahayana.hk/google-ai/turn-tag-min.js?v='+Date.now();document.head.appendChild(s)})()
 ```
 
 ### Gemini — 턴 번호 삽입
 ```javascript
-javascript:(()=>{var s=document.createElement('script');s.src='https://flymylee.github.io/chext/gemini/turn-tag.js?v='+Date.now();document.head.appendChild(s)})()
+javascript:(()=>{var s=document.createElement('script');s.src='https://chext.sahayana.hk/gemini/turn-tag.js?v='+Date.now();document.head.appendChild(s)})()
 ```
 
 ---
