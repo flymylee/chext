@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>chext — AI 채팅 추출 북마클릿</title>
+<style>
+  :root {
+    --bg: #0d1117; --surface: #161b22; --border: #30363d;
+    --text: #e6edf3; --muted: #8b949e; --blue: #58a6ff;
+    --green: #3fb950; --orange: #d29922;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: var(--bg); color: var(--text); font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; min-height: 100vh; }
+  .wrap { max-width: 780px; margin: 0 auto; padding: 48px 20px; }
+  h1 { font-size: 2rem; font-weight: 700; margin-bottom: 6px; }
+  .subtitle { color: var(--muted); margin-bottom: 48px; font-size: 0.95rem; }
+  .subtitle a { color: var(--blue); text-decoration: none; }
+  
+  .section { margin-bottom: 40px; }
+  .section-title {
+    font-size: 0.75rem; font-weight: 600; letter-spacing: .08em;
+    text-transform: uppercase; color: var(--muted);
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 8px; margin-bottom: 20px;
+  }
+
+  .card {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: 12px; padding: 20px 24px; margin-bottom: 12px;
+  }
+  .card-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 12px; }
+  .card-title { font-weight: 600; font-size: 1rem; }
+  .badge {
+    font-size: 0.7rem; font-weight: 600; padding: 2px 8px;
+    border-radius: 20px; white-space: nowrap;
+  }
+  .badge-full { background: #1f3d2b; color: var(--green); border: 1px solid #2ea04333; }
+  .badge-min  { background: #1c2d3d; color: var(--blue);  border: 1px solid #58a6ff33; }
+  .card-desc { color: var(--muted); font-size: 0.875rem; margin-bottom: 16px; line-height: 1.5; }
+
+  .bm-box {
+    background: #010409; border: 1px solid var(--border);
+    border-radius: 8px; padding: 12px 16px;
+    font-family: 'SFMono-Regular', Consolas, monospace;
+    font-size: 0.78rem; color: #79c0ff;
+    word-break: break-all; line-height: 1.6;
+    position: relative;
+  }
+  .copy-btn {
+    position: absolute; top: 8px; right: 8px;
+    background: var(--surface); border: 1px solid var(--border);
+    color: var(--muted); border-radius: 6px; padding: 4px 10px;
+    font-size: 0.72rem; cursor: pointer; transition: all .15s;
+  }
+  .copy-btn:hover { background: var(--border); color: var(--text); }
+  .copy-btn.copied { color: var(--green); border-color: var(--green); }
+
+  .how { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 24px; }
+  .step { display: flex; gap: 14px; margin-bottom: 16px; align-items: flex-start; }
+  .step:last-child { margin-bottom: 0; }
+  .step-n {
+    min-width: 26px; height: 26px; border-radius: 50%;
+    background: var(--blue); color: #0d1117;
+    font-size: 0.8rem; font-weight: 700;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .step-t { font-size: 0.875rem; color: var(--muted); line-height: 1.6; padding-top: 3px; }
+  .step-t strong { color: var(--text); }
+  code { background: #21262d; padding: 1px 6px; border-radius: 4px; font-size: 0.82em; }
+
+  footer { margin-top: 48px; padding-top: 24px; border-top: 1px solid var(--border); color: var(--muted); font-size: 0.8rem; }
+  footer a { color: var(--blue); text-decoration: none; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <h1>chext</h1>
+  <p class="subtitle">AI 채팅 추출 북마클릿 모음 —
+    <a href="https://github.com/flymylee/chext">github.com/flymylee/chext</a>
+  </p>
+
+  <!-- 설치 방법 -->
+  <div class="section">
+    <div class="section-title">설치 방법</div>
+    <div class="how">
+      <div class="step">
+        <div class="step-n">1</div>
+        <div class="step-t">아래 원하는 북마클릿의 <strong>코드 복사</strong> 버튼 클릭</div>
+      </div>
+      <div class="step">
+        <div class="step-n">2</div>
+        <div class="step-t"><strong>북마크 바 표시</strong> — <code>Ctrl+Shift+B</code> (Windows) / <code>Cmd+Shift+B</code> (Mac)</div>
+      </div>
+      <div class="step">
+        <div class="step-n">3</div>
+        <div class="step-t">북마크 바 빈 곳 우클릭 → <strong>북마크 추가</strong> → 이름 입력 → URL 칸에 복사한 코드 붙여넣기</div>
+      </div>
+      <div class="step">
+        <div class="step-n">4</div>
+        <div class="step-t">해당 페이지에서 <strong>북마크 클릭</strong>하면 실행</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Google AI Mode -->
+  <div class="section">
+    <div class="section-title">Google Search AI Mode</div>
+
+    <div class="card">
+      <div class="card-header">
+        <div class="card-title">대화 추출기 (풀버전)</div>
+        <span class="badge badge-full">주석 포함</span>
+      </div>
+      <div class="card-desc">모든 마크다운 서식 + 각주 보존. JSON 다운로드 + 미리보기.</div>
+      <div class="bm-box" id="bm-gai-full">
+        <button class="copy-btn" onclick="copy('bm-gai-full', this)">복사</button>
+        javascript:(()=>{var s=document.createElement('script');s.src='https://flymylee.github.io/chext/google-ai/extractor-full.js?v='+Date.now();document.head.appendChild(s)})()
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-header">
+        <div class="card-title">대화 추출기 (압축)</div>
+        <span class="badge badge-min">각주 제거 · 5.9KB</span>
+      </div>
+      <div class="card-desc">풀버전에서 각주·이미지 핸들러 제거. 마크다운 변환은 동일.</div>
+      <div class="bm-box" id="bm-gai-min">
+        <button class="copy-btn" onclick="copy('bm-gai-min', this)">복사</button>
+        javascript:(()=>{var s=document.createElement('script');s.src='https://flymylee.github.io/chext/google-ai/extractor-full-min.js?v='+Date.now();document.head.appendChild(s)})()
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-header">
+        <div class="card-title">대화 추출기 (경량)</div>
+        <span class="badge badge-min">3.5KB</span>
+      </div>
+      <div class="card-desc">최소 의존. 각주·이미지 없음. Safari 등 URL 제한 브라우저용.</div>
+      <div class="bm-box" id="bm-gai-short">
+        <button class="copy-btn" onclick="copy('bm-gai-short', this)">복사</button>
+        javascript:(()=>{var s=document.createElement('script');s.src='https://flymylee.github.io/chext/google-ai/extractor-short.js?v='+Date.now();document.head.appendChild(s)})()
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-header">
+        <div class="card-title">턴 번호 삽입</div>
+        <span class="badge badge-full">주석 포함</span>
+      </div>
+      <div class="card-desc">각 발화 앞에 T1, T2… 배지 삽입. 추출기와 함께 써도 번호 미포함.</div>
+      <div class="bm-box" id="bm-gai-turn">
+        <button class="copy-btn" onclick="copy('bm-gai-turn', this)">복사</button>
+        javascript:(()=>{var s=document.createElement('script');s.src='https://flymylee.github.io/chext/google-ai/turn-tag.js?v='+Date.now();document.head.appendChild(s)})()
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-header">
+        <div class="card-title">턴 번호 삽입 (압축)</div>
+        <span class="badge badge-min">2.1KB</span>
+      </div>
+      <div class="card-desc">턴 번호 삽입 압축 버전.</div>
+      <div class="bm-box" id="bm-gai-turn-min">
+        <button class="copy-btn" onclick="copy('bm-gai-turn-min', this)">복사</button>
+        javascript:(()=>{var s=document.createElement('script');s.src='https://flymylee.github.io/chext/google-ai/turn-tag-min.js?v='+Date.now();document.head.appendChild(s)})()
+      </div>
+    </div>
+  </div>
+
+  <!-- Gemini -->
+  <div class="section">
+    <div class="section-title">Gemini</div>
+    <div class="card">
+      <div class="card-header">
+        <div class="card-title">턴 번호 삽입</div>
+        <span class="badge badge-full">원본</span>
+      </div>
+      <div class="card-desc">Gemini 웹앱 대화에 턴 번호 삽입.</div>
+      <div class="bm-box" id="bm-gem-turn">
+        <button class="copy-btn" onclick="copy('bm-gem-turn', this)">복사</button>
+        javascript:(()=>{var s=document.createElement('script');s.src='https://flymylee.github.io/chext/gemini/turn-tag.js?v='+Date.now();document.head.appendChild(s)})()
+      </div>
+    </div>
+  </div>
+
+  <!-- Node.js -->
+  <div class="section">
+    <div class="section-title">Node.js</div>
+    <div class="card">
+      <div class="card-title" style="margin-bottom:10px">Google AI Mode 추출기</div>
+      <div class="card-desc">
+        HTML 파일 → JSON / 마크다운 변환.<br>
+        <code>npm install jsdom</code> 후 사용.
+      </div>
+      <div class="bm-box" id="bm-node" style="color:#e6edf3">
+        <button class="copy-btn" onclick="copy('bm-node', this)">복사</button>
+        node extractor.js input.html output.json
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <a href="https://github.com/flymylee/chext">GitHub</a> ·
+    Google Search AI Mode, Gemini 전용 · MIT License
+  </footer>
+
+</div>
+<script>
+function copy(id, btn) {
+  const el = document.getElementById(id);
+  const text = el.childNodes[el.childNodes.length - 1].textContent.trim();
+  navigator.clipboard.writeText(text).then(() => {
+    btn.textContent = '완료 ✓';
+    btn.classList.add('copied');
+    setTimeout(() => { btn.textContent = '복사'; btn.classList.remove('copied'); }, 1500);
+  });
+}
+</script>
+</body>
+</html>
