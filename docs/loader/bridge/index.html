@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Chext Loader 3.1 — DOM Bridge</title>
+  <style>
+    html,body{margin:0;height:100%;background:#202124;color:#eee;font:14px system-ui}
+    #preview{position:fixed;inset:0;width:100%;height:100%;border:0;background:white}
+    #notice[hidden],#preview[hidden]{display:none}
+    #notice{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;padding:24px;box-sizing:border-box;background:#202124;text-align:center}
+    #import{width:90vw;height:140px;box-sizing:border-box}
+    button{min-height:40px}
+  </style>
+</head>
+<body>
+  <iframe id="preview" title="Inert DOM snapshot" sandbox="allow-same-origin" hidden></iframe>
+  <section id="notice">
+    <div><h2>Chext Loader 3.1</h2><p id="message">Waiting for the source page’s DOM snapshot…</p>
+    <p>Tip: use Minimize to inspect the snapshot, then Restore to execute a selector.</p>
+    <details><summary>Manual HTML import (when opener is blocked)</summary><textarea id="import" placeholder="Paste saved HTML here"></textarea><div><button id="load">Load HTML</button></div></details></div>
+  </section>
+  <script src="../src/core.js"></script>
+  <script src="../src/extension.js"></script>
+  <script src="./app.js"></script>
+</body>
+</html>

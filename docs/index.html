@@ -1,222 +1,69 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="ko">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>chext — AI 채팅 추출 북마클릿</title>
+<title>chext — 북마클릿 툴킷</title>
 <style>
-  :root {
-    --bg: #0d1117; --surface: #161b22; --border: #30363d;
-    --text: #e6edf3; --muted: #8b949e; --blue: #58a6ff;
-    --green: #3fb950; --orange: #d29922;
-  }
-  * { box-sizing: border-box; margin: 0; padding: 0; }
-  body { background: var(--bg); color: var(--text); font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; min-height: 100vh; }
-  .wrap { max-width: 780px; margin: 0 auto; padding: 48px 20px; }
-  h1 { font-size: 2rem; font-weight: 700; margin-bottom: 6px; }
-  .subtitle { color: var(--muted); margin-bottom: 48px; font-size: 0.95rem; }
-  .subtitle a { color: var(--blue); text-decoration: none; }
-  
-  .section { margin-bottom: 40px; }
-  .section-title {
-    font-size: 0.75rem; font-weight: 600; letter-spacing: .08em;
-    text-transform: uppercase; color: var(--muted);
-    border-bottom: 1px solid var(--border);
-    padding-bottom: 8px; margin-bottom: 20px;
-  }
-
-  .card {
-    background: var(--surface); border: 1px solid var(--border);
-    border-radius: 12px; padding: 20px 24px; margin-bottom: 12px;
-  }
-  .card-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 12px; }
-  .card-title { font-weight: 600; font-size: 1rem; }
-  .badge {
-    font-size: 0.7rem; font-weight: 600; padding: 2px 8px;
-    border-radius: 20px; white-space: nowrap;
-  }
-  .badge-full { background: #1f3d2b; color: var(--green); border: 1px solid #2ea04333; }
-  .badge-min  { background: #1c2d3d; color: var(--blue);  border: 1px solid #58a6ff33; }
-  .card-desc { color: var(--muted); font-size: 0.875rem; margin-bottom: 16px; line-height: 1.5; }
-
-  .bm-box {
-    background: #010409; border: 1px solid var(--border);
-    border-radius: 8px; padding: 12px 16px;
-    font-family: 'SFMono-Regular', Consolas, monospace;
-    font-size: 0.78rem; color: #79c0ff;
-    word-break: break-all; line-height: 1.6;
-    position: relative;
-  }
-  .copy-btn {
-    position: absolute; top: 8px; right: 8px;
-    background: var(--surface); border: 1px solid var(--border);
-    color: var(--muted); border-radius: 6px; padding: 4px 10px;
-    font-size: 0.72rem; cursor: pointer; transition: all .15s;
-  }
-  .copy-btn:hover { background: var(--border); color: var(--text); }
-  .copy-btn.copied { color: var(--green); border-color: var(--green); }
-
-  .how { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 24px; }
-  .step { display: flex; gap: 14px; margin-bottom: 16px; align-items: flex-start; }
-  .step:last-child { margin-bottom: 0; }
-  .step-n {
-    min-width: 26px; height: 26px; border-radius: 50%;
-    background: var(--blue); color: #0d1117;
-    font-size: 0.8rem; font-weight: 700;
-    display: flex; align-items: center; justify-content: center;
-  }
-  .step-t { font-size: 0.875rem; color: var(--muted); line-height: 1.6; padding-top: 3px; }
-  .step-t strong { color: var(--text); }
-  code { background: #21262d; padding: 1px 6px; border-radius: 4px; font-size: 0.82em; }
-
-  footer { margin-top: 48px; padding-top: 24px; border-top: 1px solid var(--border); color: var(--muted); font-size: 0.8rem; }
-  footer a { color: var(--blue); text-decoration: none; }
+:root{color-scheme:dark;--bg:#0d1117;--card:#161b22;--stroke:#30363d;--text:#e6edf3;--sub:#9aa6b2;--accent:#58a6ff;--ok:#3fb950}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font:15px/1.55 system-ui,-apple-system,'Segoe UI',sans-serif}
+main{max-width:900px;margin:auto;padding:36px 18px 64px}h1{font-size:2rem;margin:0}h2{font-size:1.12rem;margin:0 0 15px;border-bottom:1px solid var(--stroke);padding-bottom:9px}h3{font-size:1rem;margin:0}p{margin:8px 0 12px;color:var(--sub)}.lead{margin:4px 0 30px}.lead a,a{color:var(--accent)}
+section{margin:28px 0}.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,330px),1fr));gap:13px}
+.card{background:var(--card);border:1px solid var(--stroke);border-radius:12px;padding:17px;min-width:0}.card-header{display:flex;gap:10px;align-items:flex-start;justify-content:space-between}.tag{border:1px solid #285072;border-radius:20px;color:#b4dcff;font-size:11px;padding:2px 8px;white-space:nowrap}
+.actions{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-top:16px}.actions a{font-size:13px}.copy{border:1px solid #497da5;background:#203752;color:#e6f2ff;border-radius:8px;padding:9px 13px;font:600 14px system-ui;cursor:pointer;min-height:41px}.copy:focus-visible{outline:2px solid var(--accent)}.copy:hover{background:#2c4665}.copy:disabled{opacity:.6}
+.code-preview{font:12px/1.5 ui-monospace,SFMono-Regular,Consolas,monospace;background:#010409;border:1px solid var(--stroke);color:#79c0ff;border-radius:7px;padding:10px;max-height:80px;overflow:auto;overflow-wrap:anywhere}
+.guide{background:var(--card);border:1px solid var(--stroke);border-radius:12px;padding:18px 22px}.guide ol{margin:4px 0;padding-left:20px}.guide li{padding:4px 0}.note{border-left:3px solid #ad8a3e;padding-left:12px;font-size:13px;margin-top:12px}
+footer{color:var(--sub);border-top:1px solid var(--stroke);margin-top:36px;padding-top:18px;font-size:13px}
+#status{position:fixed;inset:auto 15px 15px auto;max-width:min(92vw,400px);border:1px solid var(--stroke);border-radius:8px;padding:10px 13px;background:#1b2940;color:white;box-shadow:0 5px 22px #0008}#status[hidden]{display:none}
+@media(max-width:540px){main{padding:24px 14px}.lead{margin-bottom:22px}.code-preview{max-height:60px}}
 </style>
 </head>
 <body>
-<div class="wrap">
-
-  <h1>chext</h1>
-  <p class="subtitle">AI 채팅 추출 북마클릿 모음 —
-    <a href="https://github.com/flymylee/chext">github.com/flymylee/chext</a>
-  </p>
-
-  <!-- 설치 방법 -->
-  <div class="section">
-    <div class="section-title">설치 방법</div>
-    <div class="how">
-      <div class="step">
-        <div class="step-n">1</div>
-        <div class="step-t">아래 원하는 북마클릿의 <strong>코드 복사</strong> 버튼 클릭</div>
-      </div>
-      <div class="step">
-        <div class="step-n">2</div>
-        <div class="step-t"><strong>북마크 바 표시</strong> — <code>Ctrl+Shift+B</code> (Windows) / <code>Cmd+Shift+B</code> (Mac)</div>
-      </div>
-      <div class="step">
-        <div class="step-n">3</div>
-        <div class="step-t">북마크 바 빈 곳 우클릭 → <strong>북마크 추가</strong> → 이름 입력 → URL 칸에 복사한 코드 붙여넣기</div>
-      </div>
-      <div class="step">
-        <div class="step-n">4</div>
-        <div class="step-t">해당 페이지에서 <strong>북마크 클릭</strong>하면 실행</div>
-      </div>
-    </div>
-  </div>
-
-  <!-- Google AI Mode -->
-  <div class="section">
-    <div class="section-title">Google Search AI Mode</div>
-
-    <div class="card">
-      <div class="card-header">
-        <div class="card-title">대화 추출기 (풀버전)</div>
-        <span class="badge badge-full">주석 포함</span>
-      </div>
-      <div class="card-desc">모든 마크다운 서식 + 각주 보존. JSON 다운로드 + 미리보기.</div>
-      <div class="bm-box" id="bm-gai-full">
-        <button class="copy-btn" onclick="copy('bm-gai-full', this)">복사</button>
-        javascript:(()=>{var s=document.createElement('script');s.src='https://chext.sahayana.hk/google-ai/extractor-full.js?v='+Date.now();document.head.appendChild(s)})()
-      </div>
-    </div>
-
-    <div class="card">
-      <div class="card-header">
-        <div class="card-title">대화 추출기 (압축)</div>
-        <span class="badge badge-min">각주 제거 · 5.9KB</span>
-      </div>
-      <div class="card-desc">풀버전에서 각주·이미지 핸들러 제거. 마크다운 변환은 동일.</div>
-      <div class="bm-box" id="bm-gai-min">
-        <button class="copy-btn" onclick="copy('bm-gai-min', this)">복사</button>
-        javascript:(()=>{var s=document.createElement('script');s.src='https://chext.sahayana.hk/google-ai/extractor-full-min.js?v='+Date.now();document.head.appendChild(s)})()
-      </div>
-    </div>
-
-    <div class="card">
-      <div class="card-header">
-        <div class="card-title">대화 추출기 (경량)</div>
-        <span class="badge badge-min">3.5KB</span>
-      </div>
-      <div class="card-desc">최소 의존. 각주·이미지 없음. Safari 등 URL 제한 브라우저용.</div>
-      <div class="bm-box" id="bm-gai-short">
-        <button class="copy-btn" onclick="copy('bm-gai-short', this)">복사</button>
-        javascript:(()=>{var s=document.createElement('script');s.src='https://chext.sahayana.hk/google-ai/extractor-short.js?v='+Date.now();document.head.appendChild(s)})()
-      </div>
-    </div>
-
-    <div class="card">
-      <div class="card-header">
-        <div class="card-title">턴 번호 삽입</div>
-        <span class="badge badge-full">주석 포함</span>
-      </div>
-      <div class="card-desc">각 발화 앞에 T1, T2… 배지 삽입. 추출기와 함께 써도 번호 미포함.</div>
-      <div class="bm-box" id="bm-gai-turn">
-        <button class="copy-btn" onclick="copy('bm-gai-turn', this)">복사</button>
-        javascript:(()=>{var s=document.createElement('script');s.src='https://chext.sahayana.hk/google-ai/turn-tag.js?v='+Date.now();document.head.appendChild(s)})()
-      </div>
-    </div>
-
-    <div class="card">
-      <div class="card-header">
-        <div class="card-title">턴 번호 삽입 (압축)</div>
-        <span class="badge badge-min">2.1KB</span>
-      </div>
-      <div class="card-desc">턴 번호 삽입 압축 버전.</div>
-      <div class="bm-box" id="bm-gai-turn-min">
-        <button class="copy-btn" onclick="copy('bm-gai-turn-min', this)">복사</button>
-        javascript:(()=>{var s=document.createElement('script');s.src='https://chext.sahayana.hk/google-ai/turn-tag-min.js?v='+Date.now();document.head.appendChild(s)})()
-      </div>
-    </div>
-  </div>
-
-  <!-- Gemini -->
-  <div class="section">
-    <div class="section-title">Gemini</div>
-    <div class="card">
-      <div class="card-header">
-        <div class="card-title">턴 번호 삽입</div>
-        <span class="badge badge-full">원본</span>
-      </div>
-      <div class="card-desc">Gemini 웹앱 대화에 턴 번호 삽입.</div>
-      <div class="bm-box" id="bm-gem-turn">
-        <button class="copy-btn" onclick="copy('bm-gem-turn', this)">복사</button>
-        javascript:(()=>{var s=document.createElement('script');s.src='https://chext.sahayana.hk/gemini/turn-tag.js?v='+Date.now();document.head.appendChild(s)})()
-      </div>
-    </div>
-  </div>
-
-  <!-- Node.js -->
-  <div class="section">
-    <div class="section-title">Node.js</div>
-    <div class="card">
-      <div class="card-title" style="margin-bottom:10px">Google AI Mode 추출기</div>
-      <div class="card-desc">
-        HTML 파일 → JSON / 마크다운 변환.<br>
-        <code>npm install jsdom</code> 후 사용.
-      </div>
-      <div class="bm-box" id="bm-node" style="color:#e6edf3">
-        <button class="copy-btn" onclick="copy('bm-node', this)">복사</button>
-        node extractor.js input.html output.json
-      </div>
-    </div>
-  </div>
-
-  <footer>
-    <a href="https://github.com/flymylee/chext">GitHub</a> ·
-    Google Search AI Mode, Gemini 전용 · MIT License
-  </footer>
-
-</div>
+<main>
+<header><h1>chext</h1><p class="lead">DOM 추출·편집과 AI 채팅 내보내기 북마클릿 · <a href="https://github.com/flymylee/chext">GitHub 저장소</a></p></header>
+<section id="install"><h2>설치 방법</h2><div class="guide"><ol><li>필요한 북마클릿의 <strong>복사</strong> 버튼을 누릅니다.</li><li>브라우저에서 새 북마크를 만들고, URL/주소 필드에 복사한 코드를 붙여넣습니다.</li><li>대상 페이지에서 북마클릿을 실행합니다.</li></ol><p class="note">모바일 브라우저는 북마클릿 URL 길이에 제한이 있을 수 있습니다. Native Single이 잘리지 않으면 그대로 사용하고, 잘리면 Split을 선택하세요. 클립보드 복사가 제한되면 파일 링크에서 원문을 확인할 수 있습니다.</p></div></section>
+<section id="dom-executor"><h2>Chext DOM Executor</h2><div class="cards">
+<article class="card"><div class="card-header"><h3>Native v1.1.0 — Single</h3><span class="tag">Live DOM · Full</span></div><p>북마클릿 하나에 전체 기능. CSS Selector/Pick, Markdown 및 HTML 추출, length/remove/append, Minimize/Restore/Terminate.</p><div class="actions"><button class="copy" type="button" data-file="loader/native/bookmarklet.txt">Single 복사</button><a href="loader/native/bookmarklet.txt">코드 보기</a></div></article>
+<article class="card"><div class="card-header"><h3>Native v1.1.0 — Split</h3><span class="tag">각 5KB 이하</span></div><p>Single과 기능 동일. <strong>Core → Extension</strong> 순서로 북마클릿 두 개를 실행합니다.</p><div class="actions"><button class="copy" type="button" data-file="loader/split/01-core.txt">① Core 복사</button><button class="copy" type="button" data-file="loader/split/02-extension.txt">② Extension 복사</button></div></article>
+<article class="card"><div class="card-header"><h3>Loader 3.1 — Bridge</h3><span class="tag">Snapshot</span></div><p>별도 페이지에 DOM 스냅샷을 전달합니다. Live DOM 스크립트·동적 로딩과 다르며 remove/append는 <strong>스냅샷만</strong> 변경합니다.</p><div class="actions"><button class="copy" type="button" data-file="loader/bridge/bookmarklet.txt">Bridge 복사</button><a href="loader/bridge/" target="_blank" rel="noopener">Bridge 열기</a></div></article>
+</div><p class="note">Native에서의 Remove/Append는 현재 웹페이지를 변경합니다. Terminate는 페이지 변경을 되돌리지 않습니다. 사이트 보안 정책(CSP/COOP/Trusted Types)에 따라 일부 기능이 제한될 수 있습니다. <a href="https://github.com/flymylee/chext/blob/main/loader/README.md">기술 문서</a></p></section><section><h2>Google Search AI Mode</h2><div class="cards"><article class="card"><div class="card-header"><h3>대화 추출기 (풀버전)</h3><span class="tag">주석 포함</span></div>
+<p>모든 마크다운 서식과 각주 보존. JSON 다운로드 + 미리보기.</p><div class="code-preview"><code>javascript:(()=&gt;{var s=document.createElement(&#x27;script&#x27;);s.src=&#x27;https://chext.sahayana.hk/google-ai/extractor-full.js?v=&#x27;+Date.now();document.head.appendChild(s)})()</code></div>
+<div class="actions"><button type="button" class="copy" data-code="javascript:(()=&gt;{var s=document.createElement(&#x27;script&#x27;);s.src=&#x27;https://chext.sahayana.hk/google-ai/extractor-full.js?v=&#x27;+Date.now();document.head.appendChild(s)})()">북마클릿 복사</button><a href="https://github.com/flymylee/chext/blob/main/google-ai/extractor-full.js" target="_blank" rel="noopener">원본 JS</a></div></article><article class="card"><div class="card-header"><h3>대화 추출기 (압축)</h3><span class="tag">압축</span></div>
+<p>각주 제거. Markdown 변환.</p><div class="code-preview"><code>javascript:(()=&gt;{var s=document.createElement(&#x27;script&#x27;);s.src=&#x27;https://chext.sahayana.hk/google-ai/extractor-full-min.js?v=&#x27;+Date.now();document.head.appendChild(s)})()</code></div>
+<div class="actions"><button type="button" class="copy" data-code="javascript:(()=&gt;{var s=document.createElement(&#x27;script&#x27;);s.src=&#x27;https://chext.sahayana.hk/google-ai/extractor-full-min.js?v=&#x27;+Date.now();document.head.appendChild(s)})()">북마클릿 복사</button><a href="https://github.com/flymylee/chext/blob/main/google-ai/extractor-full-min.js" target="_blank" rel="noopener">원본 JS</a></div></article><article class="card"><div class="card-header"><h3>대화 추출기 (경량)</h3><span class="tag">경량</span></div>
+<p>각주·이미지 없음. URL 길이 제한 브라우저용.</p><div class="code-preview"><code>javascript:(()=&gt;{var s=document.createElement(&#x27;script&#x27;);s.src=&#x27;https://chext.sahayana.hk/google-ai/extractor-short.js?v=&#x27;+Date.now();document.head.appendChild(s)})()</code></div>
+<div class="actions"><button type="button" class="copy" data-code="javascript:(()=&gt;{var s=document.createElement(&#x27;script&#x27;);s.src=&#x27;https://chext.sahayana.hk/google-ai/extractor-short.js?v=&#x27;+Date.now();document.head.appendChild(s)})()">북마클릿 복사</button><a href="https://github.com/flymylee/chext/blob/main/google-ai/extractor-short.js" target="_blank" rel="noopener">원본 JS</a></div></article><article class="card"><div class="card-header"><h3>턴 번호 삽입</h3><span class="tag">주석 포함</span></div>
+<p>발화에 T1, T2… 번호 표시.</p><div class="code-preview"><code>javascript:(()=&gt;{var s=document.createElement(&#x27;script&#x27;);s.src=&#x27;https://chext.sahayana.hk/google-ai/turn-tag.js?v=&#x27;+Date.now();document.head.appendChild(s)})()</code></div>
+<div class="actions"><button type="button" class="copy" data-code="javascript:(()=&gt;{var s=document.createElement(&#x27;script&#x27;);s.src=&#x27;https://chext.sahayana.hk/google-ai/turn-tag.js?v=&#x27;+Date.now();document.head.appendChild(s)})()">북마클릿 복사</button><a href="https://github.com/flymylee/chext/blob/main/google-ai/turn-tag.js" target="_blank" rel="noopener">원본 JS</a></div></article><article class="card"><div class="card-header"><h3>턴 번호 삽입 (압축)</h3><span class="tag">압축</span></div>
+<p>턴 번호 삽입의 압축 버전.</p><div class="code-preview"><code>javascript:(()=&gt;{var s=document.createElement(&#x27;script&#x27;);s.src=&#x27;https://chext.sahayana.hk/google-ai/turn-tag-min.js?v=&#x27;+Date.now();document.head.appendChild(s)})()</code></div>
+<div class="actions"><button type="button" class="copy" data-code="javascript:(()=&gt;{var s=document.createElement(&#x27;script&#x27;);s.src=&#x27;https://chext.sahayana.hk/google-ai/turn-tag-min.js?v=&#x27;+Date.now();document.head.appendChild(s)})()">북마클릿 복사</button><a href="https://github.com/flymylee/chext/blob/main/google-ai/turn-tag-min.js" target="_blank" rel="noopener">원본 JS</a></div></article></div></section><section><h2>Gemini</h2><div class="cards"><article class="card"><div class="card-header"><h3>턴 번호 삽입</h3><span class="tag">원본</span></div>
+<p>Gemini 웹앱 대화에 턴 번호 표시.</p><div class="code-preview"><code>javascript:(()=&gt;{var s=document.createElement(&#x27;script&#x27;);s.src=&#x27;https://chext.sahayana.hk/gemini/turn-tag.js?v=&#x27;+Date.now();document.head.appendChild(s)})()</code></div>
+<div class="actions"><button type="button" class="copy" data-code="javascript:(()=&gt;{var s=document.createElement(&#x27;script&#x27;);s.src=&#x27;https://chext.sahayana.hk/gemini/turn-tag.js?v=&#x27;+Date.now();document.head.appendChild(s)})()">북마클릿 복사</button><a href="https://github.com/flymylee/chext/blob/main/gemini/turn-tag.js" target="_blank" rel="noopener">원본 JS</a></div></article></div></section><section><h2>Node.js</h2><article class="card"><h3>Google AI Mode 추출기</h3><p>저장된 HTML 파일을 JSON/Markdown으로 변환합니다. <code>npm install jsdom</code> 후 사용하세요.</p><div class="code-preview"><code>node node/extractor.js input.html output.json</code></div><div class="actions"><a href="https://github.com/flymylee/chext/blob/main/node/extractor.js">소스 및 사용법</a></div></article></section><footer><a href="https://github.com/flymylee/chext">GitHub</a> · DOM 도구 · Google AI Mode · Gemini · MIT License</footer>
+</main><div id="status" role="status" aria-live="polite" hidden></div>
 <script>
-function copy(id, btn) {
-  const el = document.getElementById(id);
-  const text = el.childNodes[el.childNodes.length - 1].textContent.trim();
-  navigator.clipboard.writeText(text).then(() => {
-    btn.textContent = '완료 ✓';
-    btn.classList.add('copied');
-    setTimeout(() => { btn.textContent = '복사'; btn.classList.remove('copied'); }, 1500);
-  });
-}
+const status = document.getElementById('status');
+let statusTimer;
+function toast(message){status.textContent=message;status.hidden=false;clearTimeout(statusTimer);statusTimer=setTimeout(()=>status.hidden=true,3200)}
+document.addEventListener('click',async(event)=>{
+  const button=event.target.closest('button.copy');
+  if(!button)return;
+  const label=button.textContent;
+  button.disabled=true;
+  try{
+    let code=button.dataset.code;
+    if(button.dataset.file){
+      const resp=await fetch(button.dataset.file,{cache:'no-store'});
+      if(!resp.ok)throw new Error('HTTP '+resp.status);
+      code=await resp.text();
+      if(!code.startsWith('javascript:')||!code.endsWith(';')||code.includes('\r'))throw new Error('Invalid bookmarklet file');
+    }
+    if(!code||!code.startsWith('javascript:'))throw new Error('Missing bookmarklet');
+    await navigator.clipboard.writeText(code);
+    button.textContent='복사 완료 ✓';
+    toast('북마클릿 코드가 복사되었습니다.');
+  }catch(e){toast('복사 실패: '+e.message);button.textContent='복사 실패';}
+  setTimeout(()=>{button.disabled=false;button.textContent=label},1800);
+});
 </script>
 </body>
 </html>
